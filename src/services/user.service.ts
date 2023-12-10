@@ -8,7 +8,7 @@ const createUser= async(userData:IUser):Promise<IUser>=>{
 
 const getAllUsers= async():Promise<IUser[]>=>{
     const result= await User.find({
-       
+    "name":{$eq:"Abir"}
     });
     return result;
 }

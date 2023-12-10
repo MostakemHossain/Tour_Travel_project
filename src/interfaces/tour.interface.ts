@@ -8,8 +8,8 @@ interface ITour{
     images:string[];
     createdAt: Date;
     startDates:Date[];
-    startLocation:string[];
-    location:string[];
+    startLocation:string;
+    locations:string[];
     slug:string;
 }
 export { ITour };
