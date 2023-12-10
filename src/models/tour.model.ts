@@ -1,4 +1,5 @@
 import { Schema, model } from "mongoose";
+import slugify from "slugify";
 import { ITour } from "../interfaces/tour.interface";
 
 const tourSchema = new Schema<ITour>(
@@ -40,7 +41,21 @@ const tourSchema = new Schema<ITour>(
       locations: [String],
       slug: String,
     },
+
+    {
+      toJSON:{virtuals:true},
+      toObject:{virtuals:true}
+    }
    
   )
+
+  tourSchema.virtual('durationDays').get(function(){
+    return this.durationHours/24;
+  })
+
+  tourSchema.pre('save',function(next){
+    this.slug = slugify(this.name,{lower:true});
+    next();
+  })
 
   export const Tour= model<ITour>('Tour',tourSchema);
