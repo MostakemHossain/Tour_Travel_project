@@ -1,15 +1,28 @@
-interface ITour{
-    name:string;
-    durationHours:number;
-    ratingAverage:number;
-    ratingQuantity:number;
-    price:number;
-    imageCover:string;
-    images:string[];
-    createdAt: Date;
-    startDates:Date[];
-    startLocation:string;
-    locations:string[];
-    slug:string;
+import { Model } from "mongoose";
+
+interface ITour {
+  name: string;
+  durationHours: number;
+  ratingAverage: number;
+  ratingQuantity: number;
+  price: number;
+  imageCover: string;
+  images: string[];
+  createdAt: Date;
+  startDates: Date[];
+  startLocation: string;
+  locations: string[];
+  slug: string;
 }
-export { ITour };
+
+interface ITourMethods {
+  getNextNearestStartDateAndEndDate(): {
+    nearestStartDate: Date | null;
+    estimatedEndDate: Date | null;
+  };
+}
+
+type TTourModel= Model<ITour,Record<string, never>,ITourMethods>
+
+export { ITour, ITourMethods, TTourModel };
+

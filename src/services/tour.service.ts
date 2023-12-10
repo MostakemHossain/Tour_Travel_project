@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ITour } from "../interfaces/tour.interface";
 import { Tour } from "../models/tour.model";
 
@@ -26,10 +27,21 @@ const deleteTour = async (id: string): Promise<ITour | null> => {
   const result = await Tour.findByIdAndDelete(id);
   return result
 }
+const getNextSchedule = async (id: string): Promise<any> => {
+    const tour = await Tour.findById(id);
+    const nextSchedule= tour?.getNextNearestStartDateAndEndDate();
+    return{
+        tour,
+        nextSchedule,
+    }
+
+ 
+}
 export const tourServices= {
     createTour,
     getAllTours,
     getSingleTour,
     updateTour,
-    deleteTour
+    deleteTour,
+    getNextSchedule
 }
