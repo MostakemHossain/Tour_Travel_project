@@ -6,6 +6,7 @@ import { reviewServices } from "../services/review.service";
 const createReview= async (req:Request,res:Response)=>{
     try{
         const reviewData= req.body;
+      
         const result= await reviewServices.createReview(reviewData);
         res.status(201).json({
             status:'success',

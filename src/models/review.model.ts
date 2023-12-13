@@ -29,4 +29,7 @@ const reviewSchema = new Schema<IReview>(
    
   )
 
+  // compound field unique ex: 1 user can review at 1 time
+  reviewSchema.index({tour:1,user:1},{unique:true});
+
   export const Review= model<IReview>('Review',reviewSchema);
