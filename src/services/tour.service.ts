@@ -14,7 +14,7 @@ const getAllTours= async():Promise<ITour[]>=>{
     return result;
 }
 const getSingleTour= async(id:string):Promise<ITour | null>=>{
-    const result= await Tour.findById(id);
+    const result= await Tour.findById(id).populate('reviews');
     return result;
 }
 const updateTour= async(id:string,tourData:ITour):Promise<ITour |null>=>{

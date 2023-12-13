@@ -3,12 +3,15 @@ import { Review } from "../models/review.model";
 
 const createReview= async(reviewData:IReview):Promise<IReview>=>{
     const result= await Review.create(reviewData);
+    
     return result;
 }
 
 const getAllReviews= async():Promise<IReview[]>=>{
-    const result= await Review.find({
-   
+    const result= await Review.find().populate({
+        path:'user',
+        select:'name photo'
+
     });
     return result;
 }

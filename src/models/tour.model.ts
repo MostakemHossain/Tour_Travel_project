@@ -53,6 +53,13 @@ const tourSchema = new Schema<ITour,TTourModel,ITourMethods>(
     return this.durationHours/24;
   })
 
+  tourSchema.virtual('reviews',{
+    ref:'Review',
+    localField:'_id',
+    foreignField:'tour'
+  })
+
+
   tourSchema.pre('save',function(next){
     this.slug = slugify(this.name,{lower:true});
     next();
