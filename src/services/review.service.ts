@@ -3,6 +3,10 @@ import { Review } from "../models/review.model";
 
 const createReview= async(reviewData:IReview):Promise<IReview>=>{
     const result= await Review.create(reviewData);
+
+    if(result){
+        Review.calcAverageRating(result.tour);
+    }
     
     return result;
 }
@@ -13,16 +17,23 @@ const getAllReviews= async():Promise<IReview[]>=>{
         select:'name photo'
 
     });
+   
     return result;
 }
 const getSingleReview= async(id:string):Promise<IReview | null>=>{
     const result= await Review.findById(id);
+    if(result){
+        Review.calcAverageRating(result.tour);
+    }
     return result;
 }
 const updateReview= async(id:string,reviewData:IReview):Promise<IReview |null>=>{
     const result= await Review.findByIdAndUpdate(id,reviewData,{new:true,
     runValidators:true,
     })
+    if(result){
+        Review.calcAverageRating(result.tour);
+    }
     return result;
 }
 const deleteReview = async (id: string): Promise<IReview | null> => {

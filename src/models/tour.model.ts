@@ -53,6 +53,7 @@ const tourSchema = new Schema<ITour,TTourModel,ITourMethods>(
     return this.durationHours/24;
   })
 
+  // virtually populate reviews 
   tourSchema.virtual('reviews',{
     ref:'Review',
     localField:'_id',
