@@ -1,7 +1,9 @@
 
 import cors from "cors";
 import express, { Application, Request, Response } from "express";
-import { notFound } from "./controllers/notFound.controller";
+
+import { notFound } from "./middleware/NotFound";
+import { globalErrorHandler } from "./middleware/globalErrorHandler";
 import { bookingRoutes } from "./routes/booking.route";
 import { reviewRoutes } from "./routes/review.route";
 import { tourRoutes } from "./routes/tour.route";
@@ -42,6 +44,10 @@ app.use('/api/v1/bookings',bookingRoutes);
 
 // way -3 middleware approch
 app.use(notFound);
+
+// global error handler
+
+app.use(globalErrorHandler);
 
 
 export default app;
