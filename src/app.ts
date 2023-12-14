@@ -4,10 +4,7 @@ import express, { Application, Request, Response } from "express";
 
 import { notFound } from "./middleware/NotFound";
 import { globalErrorHandler } from "./middleware/globalErrorHandler";
-import { bookingRoutes } from "./routes/booking.route";
-import { reviewRoutes } from "./routes/review.route";
-import { tourRoutes } from "./routes/tour.route";
-import { userRoutes } from "./routes/user.route";
+import globalRoutes from "./routes";
 const app:Application = express();
 
 
@@ -23,10 +20,8 @@ app.get('/', (req:Request, res:Response) => {
   })
 })
 
-app.use('/api/v1/users',userRoutes);
-app.use('/api/v1/tours',tourRoutes);
-app.use('/api/v1/reviews',reviewRoutes);
-app.use('/api/v1/bookings',bookingRoutes);
+app.use('/api/v1',globalRoutes);
+
 
 
 

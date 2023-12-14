@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { tourServices } from "../services/tour.service";
 
 
@@ -88,7 +88,7 @@ const deleteTour= async (req:Request,res:Response)=>{
         })
     }
 }
-const getNextSchedule= async (req:Request,res:Response)=>{
+const getNextSchedule= async (req:Request,res:Response,next:NextFunction)=>{
     try{
         const id= req.params.id;
         const result= await tourServices.getNextSchedule(id);
@@ -100,10 +100,7 @@ const getNextSchedule= async (req:Request,res:Response)=>{
         })
 
     }catch(err:any){
-        res.status(500).json({
-            status: 'fail',
-            message: err.message || 'Something went Wrong'
-        })
+       next(err);
     }
 }
 
