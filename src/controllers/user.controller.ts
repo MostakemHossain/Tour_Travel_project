@@ -1,40 +1,29 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { NextFunction, Request, Response } from 'express';
+import { Request, Response } from 'express';
 import { userServices } from '../services/user.service';
+import catchAsyncFunction from '../utils/catchAsync';
 import sendSuccessResponse from '../utils/sendResponse';
 
-const createUser = async (req: Request, res: Response, next: NextFunction) => {
-  try {
-    const userData = req.body;
-    const result = await userServices.createUser(userData);
-    sendSuccessResponse(res, {
-      statusCode: 201,
-      message: 'User created successfully',
-      data: result,
-    });
-  } catch (err: any) {
-    next(err);
-  }
-};
-const getAllUsers = async (req: Request, res: Response, next: NextFunction) => {
-  try {
-    const result = await userServices.getAllUsers();
+const createUser = catchAsyncFunction(async (req: Request, res: Response) => {
+  const userData = req.body;
+  const result = await userServices.createUser(userData);
+  sendSuccessResponse(res, {
+    statusCode: 201,
+    message: 'User created successfully',
+    data: result,
+  });
+});
+const getAllUsers = catchAsyncFunction(async (req: Request, res: Response) => {
+  const result = await userServices.getAllUsers();
 
-    sendSuccessResponse(res, {
-      statusCode: 200,
-      message: 'User fetched successfully',
-      data: result,
-    });
-  } catch (err: any) {
-    next(err);
-  }
-};
-const getSingleUser = async (
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) => {
-  try {
+  sendSuccessResponse(res, {
+    statusCode: 200,
+    message: 'User fetched successfully',
+    data: result,
+  });
+});
+const getSingleUser = catchAsyncFunction(
+  async (req: Request, res: Response) => {
     const id = req.params.id;
     const result = await userServices.getSingleUser(id);
     sendSuccessResponse(res, {
@@ -42,36 +31,26 @@ const getSingleUser = async (
       message: 'User fetched successfully',
       data: result,
     });
-  } catch (err: any) {
-    next(err);
-  }
-};
-const updateUser = async (req: Request, res: Response, next: NextFunction) => {
-  try {
-    const id = req.params.id;
-    const result = await userServices.updateUser(id, req.body);
-    sendSuccessResponse(res, {
-      statusCode: 200,
-      message: 'User updated  successfully',
-      data: result,
-    });
-  } catch (err: any) {
-    next(err);
-  }
-};
-const deleteUser = async (req: Request, res: Response, next: NextFunction) => {
-  try {
-    const id = req.params.id;
-    await userServices.deleteUser(id);
-    sendSuccessResponse(res, {
-      statusCode: 200,
-      message: 'User deleted successfully',
-      data: null,
-    });
-  } catch (err: any) {
-    next(err);
-  }
-};
+  },
+);
+const updateUser = catchAsyncFunction(async (req: Request, res: Response) => {
+  const id = req.params.id;
+  const result = await userServices.updateUser(id, req.body);
+  sendSuccessResponse(res, {
+    statusCode: 200,
+    message: 'User updated  successfully',
+    data: result,
+  });
+});
+const deleteUser = catchAsyncFunction(async (req: Request, res: Response) => {
+  const id = req.params.id;
+  await userServices.deleteUser(id);
+  sendSuccessResponse(res, {
+    statusCode: 200,
+    message: 'User deleted successfully',
+    data: null,
+  });
+});
 
 export const userController = {
   createUser,
