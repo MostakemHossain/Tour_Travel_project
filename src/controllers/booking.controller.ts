@@ -36,6 +36,17 @@ const getSingleBooking = catchAsyncFunction(
     });
   },
 );
+const getAllBookingsofAuser = catchAsyncFunction(
+    async (req: Request, res: Response) => {
+      const id = req.params.id;
+      const result = await bookingServices.getAllBookingsOfAUser(id);
+      sendSuccessResponse(res, {
+        statusCode: 200,
+        message: 'All bookings of a user  fetched successfully',
+        data: result,
+      });
+    },
+  );
 const updateBooking = catchAsyncFunction(
   async (req: Request, res: Response) => {
     const id = req.params.id;
@@ -65,4 +76,5 @@ export const bookingController = {
   getSingleBooking,
   updateBooking,
   deleteBooking,
+  getAllBookingsofAuser,
 };
