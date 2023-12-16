@@ -1,13 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ITour } from '../interfaces/tour.interface';
 import { Tour } from '../models/tour.model';
-import { createTourValidationSchema } from '../validations/tourValidation';
 
 
 
 const createTour = async (tourData: ITour): Promise<ITour> => {
-    const validateData= createTourValidationSchema.parse(tourData);
-  const result = await Tour.create(validateData);
+ 
+  const result = await Tour.create(tourData);
   return result;
 };
 
