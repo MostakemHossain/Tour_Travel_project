@@ -5,6 +5,7 @@ import { NextFunction, Request, Response } from 'express';
 import mongoose from 'mongoose';
 import handleCastError from '../helpers/errorHelpers/handleCaseError';
 import handleDuplicateError from '../helpers/errorHelpers/handleDuplicateError';
+import handleGenericError from '../helpers/errorHelpers/handleGenericError';
 import handleValidationError from '../helpers/errorHelpers/handleValidationError';
 import { TErrorResponse } from '../types/TErrorResponse';
 
@@ -32,6 +33,8 @@ export const globalErrorHandler = (
     errorResponse= handleDuplicateError(err);
   }else if(err instanceof mongoose.Error.CastError){
     errorResponse= handleCastError(err);
+  }else if(err instanceof Error){
+     errorResponse= handleGenericError(err);
   }
 
   res.status(errorResponse.statusCode).json({
