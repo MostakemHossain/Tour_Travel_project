@@ -6,7 +6,7 @@ export type TErrorResponse = {
 };
 
 export type TErrorIssue={
-    path:string,
+    path:string | number,
     message:string,
 
 }
