@@ -25,7 +25,7 @@ const tourSchema = new Schema<ITour,TTourModel,ITourMethods>(
         type: Number,
         required: [true, 'Please tell us your price'],
       },
-      avaliableSeats:{
+      availableSeats:{
         type: Number,
         required: [true, 'Please tell us Available seats'],
       },
