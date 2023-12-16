@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import mongoose from "mongoose";
+import GenericError from "../classes/errorClasses/GenericError";
 import { IBooking } from "../interfaces/booking.interface";
 import Booking from "../models/booking.model";
 import { Tour } from "../models/tour.model";
@@ -11,7 +12,7 @@ const createBooking= async(bookingData:IBooking):Promise<IBooking>=>{
     try{
        const booking= await Booking.create([bookingData],{session});
        if(!booking){
-        throw new Error("Failed to create a new booking");
+        throw new GenericError("Failed to create a new booking",400);
        }
 
        
@@ -28,7 +29,7 @@ const createBooking= async(bookingData:IBooking):Promise<IBooking>=>{
        )
 
        if(!tour){
-        throw new Error("Tour update in Booking failed");
+        throw new GenericError("Tour update in Booking failed",400);
        }
        await session.commitTransaction();
        await session.endSession();
@@ -37,7 +38,7 @@ const createBooking= async(bookingData:IBooking):Promise<IBooking>=>{
     }catch(err:any){
         await session.abortTransaction();
         await session.endSession();
-        throw new Error(err);
+        throw new GenericError(err,400);
     }
 }
 

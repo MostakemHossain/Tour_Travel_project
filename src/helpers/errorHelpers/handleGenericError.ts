@@ -1,6 +1,7 @@
+import GenericError from "../../classes/errorClasses/GenericError";
 import { TErrorIssue, TErrorResponse } from "../../types/TErrorResponse";
 
-const handleGenericError=(err: Error):TErrorResponse=>{
+const handleGenericError=(err: GenericError):TErrorResponse=>{
  
     const issues:TErrorIssue[]=[
 
@@ -11,9 +12,9 @@ const handleGenericError=(err: Error):TErrorResponse=>{
     ]
 
     return {
-        statusCode:400,
+        statusCode:err.statusCode,
         status:'error',
-        message:'Unknown Error',
+        message:'Generic Error',
         issues,
     }
 

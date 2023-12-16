@@ -2,11 +2,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { NextFunction, Request, Response } from 'express';
-import mongoose from 'mongoose';
-import handleCastError from '../helpers/errorHelpers/handleCaseError';
-import handleDuplicateError from '../helpers/errorHelpers/handleDuplicateError';
-import handleGenericError from '../helpers/errorHelpers/handleGenericError';
-import handleValidationError from '../helpers/errorHelpers/handleValidationError';
+import config from '../app/config';
+import errorPreProcessor from '../helpers/errorHelpers/errorPreprocessor';
 import { TErrorResponse } from '../types/TErrorResponse';
 
 export const globalErrorHandler = (
@@ -27,20 +24,15 @@ export const globalErrorHandler = (
     issues: err.issues || [],
   };
 
-  if (err instanceof mongoose.Error.ValidationError) {
-    errorResponse=handleValidationError(err);
-  }else if(err.code && err.code===11000){
-    errorResponse= handleDuplicateError(err);
-  }else if(err instanceof mongoose.Error.CastError){
-    errorResponse= handleCastError(err);
-  }else if(err instanceof Error){
-     errorResponse= handleGenericError(err);
-  }
+  errorResponse= errorPreProcessor(err);
+
+  
 
   res.status(errorResponse.statusCode).json({
     status: errorResponse.status,
     message: errorResponse.message,
     issues: errorResponse.issues,
+    stack: config.node_env==="development"? err.stack : undefined,
     // err: err, 
   });
 };

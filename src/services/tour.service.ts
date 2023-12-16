@@ -3,7 +3,6 @@ import { ITour } from "../interfaces/tour.interface";
 import { Tour } from "../models/tour.model";
 
 const createTour= async(tourData:ITour):Promise<ITour>=>{
-    throw new Error("Tour creation failed");
     const result= await Tour.create(tourData);
     return result;
 }
