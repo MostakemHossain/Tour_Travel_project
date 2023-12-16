@@ -13,7 +13,7 @@ const handleValidationError=(err:mongoose.Error.ValidationError):TErrorResponse=
 
     return {
         statusCode:400,
-        status:'fail',
+        status:'error',
         message:'Validation Error',
         issues,
     }

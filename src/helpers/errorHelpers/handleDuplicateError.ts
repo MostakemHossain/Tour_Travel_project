@@ -14,7 +14,7 @@ const handleDuplicateError=(err:mongoose.Error.ValidationError):TErrorResponse=>
     ];
 
     return {
-        statusCode:400,
+        statusCode:409,
         status:'error',
         message:'Duplicate Error',
         issues,

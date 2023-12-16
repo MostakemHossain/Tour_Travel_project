@@ -3,6 +3,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { NextFunction, Request, Response } from 'express';
 import mongoose from 'mongoose';
+import handleCastError from '../helpers/errorHelpers/handleCaseError';
 import handleDuplicateError from '../helpers/errorHelpers/handleDuplicateError';
 import handleValidationError from '../helpers/errorHelpers/handleValidationError';
 import { TErrorResponse } from '../types/TErrorResponse';
@@ -29,6 +30,8 @@ export const globalErrorHandler = (
     errorResponse=handleValidationError(err);
   }else if(err.code && err.code===11000){
     errorResponse= handleDuplicateError(err);
+  }else if(err instanceof mongoose.Error.CastError){
+    errorResponse= handleCastError(err);
   }
 
   res.status(errorResponse.statusCode).json({
