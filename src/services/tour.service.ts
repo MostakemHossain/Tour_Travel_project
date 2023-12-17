@@ -1,4 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+
+import { filter } from '../helpers/filterHelper';
 import { ITour } from '../interfaces/tour.interface';
 import { Tour } from '../models/tour.model';
 
@@ -10,8 +12,15 @@ const createTour = async (tourData: ITour): Promise<ITour> => {
   return result;
 };
 
-const getAllTours = async (): Promise<ITour[]> => {
-  const result = await Tour.find({});
+
+
+
+const getAllTours = async (query:any): Promise<ITour[]> => {
+
+  console.log(query);
+  const result= await filter(Tour.find(
+    
+  ),query);
   return result;
 };
 const getSingleTour = async (id: string): Promise<ITour | null> => {

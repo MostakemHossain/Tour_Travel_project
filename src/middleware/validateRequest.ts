@@ -7,7 +7,8 @@ export const validateRequest=(schema:ZodSchema)=>{
         if(!result.success){
             next(result.error);
         }else{
-            req.body= result;
+            req.body= result.data;
         }
+        next();
     }
 }
