@@ -4,6 +4,8 @@ interface IUser{
     age:number;
     gender:string;
     email:string;
+    password:string,
+    passwordChangeAt:Date,
     photo:string;
     role:'admin'|'user';
     userStatus:'active'|'inactive';
