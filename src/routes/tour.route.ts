@@ -6,11 +6,15 @@ import { createTourValidationSchema } from '../validations/tourValidation';
 const router = express.Router();
 
 router.post(
-   '/create-tour',
+  '/create-tour',
   validateRequest(createTourValidationSchema),
   tourController.createTour,
 );
-router.get('/', tourController.getAllTours);
+router.get(
+  '/',
+
+  tourController.getAllTours,
+);
 router.get(
   '/:id',
   (req: Request, res: Response, next: NextFunction) => {
